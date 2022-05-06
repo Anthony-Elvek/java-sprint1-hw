@@ -2,7 +2,7 @@ public class Converter {
 
     double Distance(int steps){
        double distance = steps * 75;
-       return distance;
+       return distance / 100000;
     }
 
     double BurnKilocalories(int steps){

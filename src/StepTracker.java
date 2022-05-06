@@ -1,54 +1,63 @@
 public class StepTracker {
 
-    int[][] monthToData;
+    MonthData[] monthToData;
     Converter converter = new Converter();
 
-    StepTracker() {
-        monthToData = new int[12][30];
+    public StepTracker() {
+        monthToData = new MonthData[12];
+        for (int i = 0; i < monthToData.length; i++) {
+            monthToData[i] = new MonthData();
+        }
     }
 
-    void printStatisticOfTheMonth(int month){
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-            if (i == 29){
-                System.out.println("День 30: " + monthToData[month - 1][i] + " ");
+    class MonthData{
+        int[] days = new int[30];
+    }
+
+    void printStatisticOfTheMonth(int month) {
+        for (int i = 0; i < monthToData[month + 1].days.length; i++) {
+            if (i == 29) {
+                System.out.println("День 30: " + monthToData[month - 1].days[i] + " ");
             } else {
-                System.out.print("День " + (i+1) + ": " + monthToData[month - 1][i] + ", ");
+                System.out.print("День " + (i + 1) + ": " + monthToData[month - 1].days[i] + ", ");
             }
         }
     }
 
-    void saveSteps(int month, int day, int steps, int challengeSteps){
-        if (steps < 0){
+    void saveSteps(int month, int day, int steps, int challengeSteps) {
+        if (steps < 0) {
+            System.out.println("Введено некорректное значение!");
+        } else if (challengeSteps < 0) {
             System.out.println("Введено некорректное значение!");
         } else if (steps >= challengeSteps) {
+            monthToData[month - 1].days[day -1] = monthToData[month - 1].days[day -1] + steps;
             System.out.println("Ура! На сегодня цель достигнута!");
-            monthToData[month - 1][day - 1] += steps;
         } else {
+            monthToData[month - 1].days[day -1] = monthToData[month - 1].days[day -1] + steps;
             System.out.println("Шаги записаны!");
-            monthToData[month - 1][day - 1] += steps;
         }
     }
 
     int sumMonthSteps(int month){
         int sum = 0;
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-            sum += monthToData[month - 1][i];
+        for (int i = 0; i < monthToData[month - 1].days.length; i++){
+            sum += monthToData[month - 1].days[i];
         }
-        return sum;
+        return  sum;
     }
 
     int avgMonthSteps(int month){
         int sum = 0;
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-            sum += monthToData[month - 1][i];
+        for (int i = 0; i < monthToData[month - 1].days.length; i++){
+            sum += monthToData[month - 1].days[i];
         }
         return sum / 30;
     }
 
     String distanceMonth(int month){
         int sum = 0;
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-            sum += monthToData[month - 1][i];
+        for (int i = 0; i < monthToData[month - 1].days.length; i++){
+            sum += monthToData[month - 1].days[i];
         }
         double distance = converter.Distance(sum);
         return distance + " км.";
@@ -56,8 +65,8 @@ public class StepTracker {
 
     String sumOfBurnKls(int month){
         int sum = 0;
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-            sum += monthToData[month - 1][i];
+        for (int i = 0; i < monthToData[month - 1].days.length; i++){
+            sum += monthToData[month - 1].days[i];
         }
         double burnKl = converter.BurnKilocalories(sum);
         return burnKl + " ккл.";
@@ -65,9 +74,9 @@ public class StepTracker {
 
     int maxStepsMonth(int month){
         int maxStep = 0;
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-            if (monthToData[month - 1][i] > maxStep){
-                maxStep = monthToData[month - 1][i];
+        for (int i = 0; i < monthToData[month - 1].days.length; i++){
+            if (monthToData[month - 1].days[i] > maxStep){
+                maxStep = monthToData[month - 1].days[i];
             }
         }
         return maxStep;
@@ -76,8 +85,8 @@ public class StepTracker {
     int countSuccessDays(int month, int challengeSteps){
         int countDays = 0;
         int maxCountDays = 0;
-        for (int i = 0; i < monthToData[month - 1].length; i++){
-           if (monthToData[month - 1][i] >= challengeSteps){
+        for (int i = 0; i < monthToData[month - 1].days.length; i++){
+           if (monthToData[month - 1].days[i] >= challengeSteps){
                countDays += 1;
            } else {
                if (countDays > maxCountDays){
