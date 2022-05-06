@@ -2,7 +2,7 @@ public class StepsStatistic {
 
     StepTracker stepTracker = new StepTracker();
 
-    void stepStatistic(int month){
+    void stepStatistic(int month, int challengeSteps){
          System.out.println("Статистика за " + month + " месяц:");
          System.out.println("1. Количество пройденных шагов за месяц: ");
          stepTracker.printStatisticOfTheMonth(month);
@@ -16,8 +16,7 @@ public class StepsStatistic {
          stepTracker.distanceMonth(month);
          System.out.println("6. Количество сожженых килокалориев: ");
          stepTracker.sumOfBurnKls(month);
-
-
-
+         System.out.println("7. Лучшая серия дней: ");
+         stepTracker.countSuccessDays(month, challengeSteps);
     }
 }

@@ -4,17 +4,36 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StepTracker stepTracker = new StepTracker();
-        printMenu();
-        stepTracker.printAllSteps();
-        stepTracker.printStatisticOfTheMonth(3);
-        int userInput = scanner.nextInt();
+        StepsStatistic statistic = new StepsStatistic();
+        int challengeSteps = 10000;
+        System.out.println("Вас приветствует Счетчик шагов!");
+        System.out.println("Введите дату: ");
 
-        while (userInput != 0) {
-
-            printMenu(); // печатем меню ещё раз перед завершением предыдущего действия
-            userInput = scanner.nextInt(); // повторное считывание данных от пользователя
+        while (true) {
+            printMenu();
+            int userInput = scanner.nextInt();
+            if (userInput == 1){
+                System.out.println("В какой месяц ввести шаги?");
+                int monthInput = scanner.nextInt();
+                System.out.println("В какой день ввести шаги?");
+                int day = scanner.nextInt();
+                System.out.println("Какое количество шагов ввести?");
+                int steps = scanner.nextInt();
+                stepTracker.saveSteps(monthInput, day, steps, challengeSteps);
+            } else if (userInput == 2){
+                System.out.println("Какой месяц вас интересует?");
+                int month = scanner.nextInt();
+                statistic.stepStatistic(month, challengeSteps);
+            } else if (userInput == 3) {
+                System.out.println("Введите новую цель: ");
+                int stepChallenge = scanner.nextInt();
+                challengeSteps = stepChallenge;
+            } else if (userInput == 0){
+                break;
+            } else {
+                System.out.println("Такой команды не существует, попробуйте снова");
+            }
         }
-        System.out.println("Программа завершена");
     }
 
     private static void printMenu() {
